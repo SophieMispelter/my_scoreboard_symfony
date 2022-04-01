@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+
+    <h2>Page d'accueil</h2>
+
+    {# AFFICHER TOUS LES JEUX sur la page d'accueil. Les jeux doivent 
+être affiché avec des div classe card #}
+<div class="card-columns">
+{% for game in games %}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{game.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Nombre de partie.s jouée.s à ce jeu:  {{game.contests|length}} .</h6>
+    <p class="card-text">
+        Entre {{game.minPlayers}} et {{game.maxPlayers}} joueurs.
+
+         {# afficher le nb de parties pour chaque jeu #}
+          <br>
+
+          <h4>Joueurs ayant participé à cette partie:</h4>
+          {% for contest in game.contests %}
+            {% for player in contest.players %}
+              <ul>
+                <li>{{player.nickname}}</li>
+              </ul>
+            {% endfor %}
+          {% endfor %}
+    </p>
+    <a href="{{path('app_home_contest', {title: game.title})}}" class="card-link">Commencer une partie</a>
+    {# <a href="#" class="card-link"></a> #}
+  </div>
+</div><br>
+{% endfor %}
+
+<h5>Liste des Vainqueurs</h5>
+{% for gagnants in winner %}
+  <ul>
+    <li>{{gagnants.nickname}}, contact : {{gagnants.email}}</li>
+  </ul>
+{% endfor %}
+
+</div>
+<hr>
+<p>Il y a <strong>{{nb_joueurs}}</strong> joueurs inscrits dans la base de données.</p>
+
+{% endblock %}
+
+ {% block footer %}Ceci est le footer de la page d'accueil{% endblock %}
+
+{# EXO : afficher les joueurs gagnants sur la page d'accueuil (dans une balise UL, nickname suivi de l'email entre parenthèses) #}

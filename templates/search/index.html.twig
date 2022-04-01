@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page des résultats de la recherche{% endblock %}
+
+{% block titreH1 %} Résultat.s de la recherche pour : <code>{{word}}</code> {% endblock %}
+
+{% block body %}
+
+<div class="card-columns">
+{% for game in games %}
+    {# {{include("admin/game/_card.html.twig")}} #}
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{game.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">Nombre de partie.s jouée.s à ce jeu:  {{game.contests|length}} .</h6>
+    <p class="card-text">
+        Entre {{game.minPlayers}} et {{game.maxPlayers}} joueurs.
+
+          <br>
+
+          <h4>Joueurs ayant participé à cette partie:</h4>
+          {% for contest in game.contests %}
+            {% for player in contest.players %}
+              <ul>
+                <li>{{player.nickname}}</li>
+              </ul>
+
+            {% else %}
+              <p>Aucun résultat trouvé.</p>
+            {% endfor %}
+          {% endfor %}
+    </p>
+    
+  </div>
+</div><br>
+{% endfor %}
+
+
+{% endblock %}
+
+ {% block footer %}Ceci est le footer {% endblock %}
+
+
+{# /* EXO 1. afficher les resultats dans le fichier search/index.html.twig sous forme de card
+                afficher aussi dans une balise h1 : Résultat de la recherche pour ...
+                et remplacer les ... par le mot tapé dans la barre de recherche 
+  2.  trouvez cmt utiliser le même code pour les 
+  		card pour le fichier home/index.html.twig
+        et le fichier search/index.html.twig
+                
+ */ #}

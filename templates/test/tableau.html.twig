@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+    {% block body %}
+        <style>
+            .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+            .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+        </style>
+        
+        <div class="example-wrapper">
+            <h1>Page affichage tableau</h1>
+
+            {# Equivalent de la boucle PHP FOREACH #}
+            <table class ="table table-bordered">
+                <tr>
+                {% for array in tableau %}
+                    <td>{{ array }}</td>
+                {% endfor %}
+                </tr>
+            </table>
+
+            <br>
+            <br>
+
+            {# foreach($tableau as $indice => $valeur) #}
+            {%  for indice, valeur in tableau %}
+                <p>{{indice}} : {{valeur}}</p>
+                {% if indice != 3 %}
+                <p>{{indice}} : {{tableau[indice]}}</p>
+                {% endif %}
+            {% endfor %}
+
+            <br>
+            <br>
+        
+            {# <p>{{tableau[0]}}</p>
+            <p>{{tableau[1]}}</p>
+            <p>{{tableau[2]}}</p>
+            <p>{{tableau[3]}}</p> #}
+
+            {# SYNTAXE de la BOUCLE Twig: balise for
+                {% for variable in debut...fin%}
+                {% endfor%} #}
+            
+            <table class ="table table-bordered">
+            {% for i in 0..tableau|length -1 %}
+                <tr>
+                    <td>{{tableau[i]}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+
+            {% for alphabet in 'a'..'z' %}
+                {{alphabet}}
+            {% endfor %}
+
+            <br>
+            <br>
+
+            {% for nombre in '0'..'50' %}
+                {{nombre}}
+            {% endfor %}
+        
+        {% endblock %}

@@ -1,0 +1,112 @@
+// Demarrer et arreter le serveur:
+// symfony server:start -d
+// symfony server:stop
+
+// Permet de créer une classe Entity qui représente une table de la bdd
+// symfony console make:entity
+
+// Compare la bdd et le dossier Entity : crée les requêtes SQL qui mettront à jour la bdd selon les entités
+// symfony console make:migration
+
+// Met à jour la bdd en exécutant les migrations
+// symfony console doctrine:migrations:migrate
+
+// Créer une classe pour gérer un formulaire basé sur une classe entité
+//symfony console make:form
+
+// classe pour générer un bouton Submit (à utiliser dans une classe Form)
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+// dans la console, pour afficher la liste des routes
+symfony console debug:route --show-controllers
+
+// doc FormType
+https://symfony.com/doc/current/reference/forms/types.html
+
+// ManyToMany, RAPPEL: quand on creer une partie, cad un enregistrement ds la table contest, il peut y avaoir plusieurs joueurs, mais pour savoir le nombre de joueurs de cette partie, il faut relier avec la table player, donc un contest peut avoir plusieurs joueurs, mais aussi, un joueur peut apparaitre n fois selon les parties (un joueur peut jouer à n parties/contest),
+on doit donc creer une table intermediaire ou chaque enegistrement va representer un id joueur et un id contest (la table contest_player qui correspond à une relation ManyToMany ) Dans l'entité contest, un champs s'est rajouté: players qui represente tous les joueurs de la partie. Et comme c une relation ds les deux sens (manytomany) dans entité Player, j'ai aussi une propriéte $contests. ATTENTION, il ne faudra pas faire de crud sur la table contest_player
+
+
+//Connexion & inscription 
+
+ composant SECURITY
+
+// Commande console pour créer l'entité qui va servir à conserver les informations des utilisateurs
+// pour la connexion et l'inscription:
+
+symfony console make:user
+	symfony console make:migration
+    symfony console doctrine:migrations:migrate
+symfony console make:auth
+
+Dans cet ordre:
+
+make:user   // pour créer l'entité qui conservera les infos des utilisateurs
+make:auth   // pour créer une authentification (formulaire de connexion)
+make:registration-form  // pour créer un formulaire d'inscription
+
+
+Installer WebPack:
+
+composer require encore 
+
+brew install yarn (pour mac)
+
+yarn install
+
+yarn add node-sass
+
+yarn add sass-loader
+
+yarn add @fortawesome/fontawesome-free
+
+yarn add bootstrap@4.6
+
+yarn add jquery
+
+yarn add popper.js
+
+yarn add file-loader
+
+// dans le ficher assets/styles/app.scss
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+@import "~bootstrap/scss/bootstrap";
+
+yarn encore dev (compile une modif d'un fichier front)
+yarn encore dev --watch (compile ttes les modifs d'un coup (donc une seule comd avec watch tandis que réitération de la comd sans watch à chaque modif))
+
+
+
+**********************
+
+GIT :
+
+git log
+
+// Pour avoir l'état de notre projet courant:
+
+git status
+
+// "Changes not staged for commit" : tous les fichiers (en rouge) modifiés du projet courant  qui sont en attente d'un commit mais qui n'ont pas été sauvegardé
+// "commit" signifie "sauvegarde"
+
+
+
+
+***********************
+
+https://symfony.com/download
+
+télécharger le zip.
+Extraire les fichiers dans un dossier (c'est automatique normalement)
+Déplacer ce dossier dans le dossier C:\Program Files (par exemple)
+Taper Modifier les variables d'environnement système (dans la recherche Windows)
+Cliquer Variables d'environnement
+Dans la fenêtre du bas, choisir la valeur 'path'
+Cliquer 
+Ajouter le dossier dans lequel se trouve le fichier symfony.exe 
+
+
+//////////////////////////////////////////////////////////
+
+

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil Utilisateur{% endblock %}
+
+{% block body %}
+<h2>Mes informations</h2>
+    <ul class="list-group">
+        <li class="list-group-item">Identifiant: {{app.user.id}}</li>
+        <li class="list-group-item">Pseudo: {{app.user.pseudo}}</li>
+        <li class="list-group-item">Mot de passe: {{app.user.password}}</li>
+        {# EXO : sur la page profil, ajouter les informations du player lié au user connecté#}
+            {% if app.user.player %}
+                {# le if vérifie que app.user.player existe #}
+        <li class="list-group-item">Informations joueur: {{app.user.player.nickname}} , {{app.user.player.email}}</li>
+            {% endif %}
+        <li class="list-group-item">Autorisations:
+
+        {#  AFFICHER dans les informations, catégories 'Autorisations' de la personne connectée son/ses rôle.s. #}
+            {% for role in app.user.roles %}
+             {% if role == 'ROLE_ADMIN'%}
+                 Administrateur
+           
+            {% elseif role == 'ROLE_PLAYER'%}
+                Joueur
+
+            {% elseif role == 'ROLE_USER'%}
+                Utilisateur
+
+            {% elseif role == 'ROLE_REFEREE'%}
+                Arbitre
+
+            {% endif %}
+
+            {{not loop.last ? ',' : ''}}
+                {# {% if not loop.last %}
+                    ,
+                {% endif %} #}
+                
+            {% endfor %}
+        </li>  
+    </ul>
+{% endblock %}

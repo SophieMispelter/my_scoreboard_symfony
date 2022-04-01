@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Partie n°{{contest.id}}{% endblock %}
+
+    {# {% block titreH1 %} Liste des parties {% endblock %} #}
+
+{% block titreH1 %} 
+    {{block("title")}}
+{% endblock %}
+
+{% block body %}
+   
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contest.id }}</td>
+            </tr>
+            <tr>
+                <th>Start_date</th>
+                <td>{{ contest.startDate ? contest.startDate|date('d/m/Y') : '' }}</td>
+            </tr>
+
+            <tr>
+                <th>Joueurs</th>
+                <td>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Email</th>
+                                <th>Nickname</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for player in contest.players %}
+                            <tr>
+                                <td>{{ player.id }}</td>
+                                <td>{{ player.email }}</td>
+                                <td>{{ player.nickname }}</td> 
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="4">no records found</td>
+                            </tr>
+                        {% endfor %}
+
+                     </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <th>Vainqueur</th>
+                <td>{{ contest.winner ? contest.winner.nickname : "non désigné" }}</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_contest_index') }}">back to list</a>
+
+    <a href="{{ path('app_admin_contest_edit', {'id': contest.id}) }}">edit</a>
+
+    {{ include('admin/contest/_delete_form.html.twig') }}
+{% endblock %}
+
+{# 1. Le titre H1 de la page doit être « Liste des parties »
+2. La date doit être affichée avec le format français
+3. Ajouter une ligne à la table principale pour afficher le vainqueur de la partie 
+
+REQUETE SQL à faire si l'on souhaite afficher/retourner les joueurs d'une partie sélectionnée (ici la partie 1 -> c.id = 1 ):
+SELECT p.*
+FROM contest c
+	JOIN contest_player cp ON c.id = cp.contest_id
+    JOIN player p ON p.id = cp.player_id
+WHERE c.id = 1
+
+REQUETE SQL pour afficher les joueurs qui ont gagné une partie:
+
+SELECT *
+FROM player p 
+	JOIN contest c ON c.winner_id = p.id
+
+    RAPPEL ON équivalent de WHERE
+
+
+REQUETE SQL pour afficher toutes les parties et afficher les joueurs qui ont gagné une partie:
+
+SELECT *
+FROM player p 
+	RIGHT JOIN contest c ON c.winner_id = p.id
+
+    #}

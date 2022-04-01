@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un jeu{% endblock %}
+
+{% block body %}
+<h1>My ScoreBoard</h1><br><br>
+<h2>Ajouter un jeu</h2><br>
+
+{{form(formGame)}}
+{# fonction form() est une fonction Twig prédéfinie pour symfony #}
+
+{% endblock %}

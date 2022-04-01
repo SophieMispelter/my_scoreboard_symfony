@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block titreH1 %}
+    {{block("title")}}
+{% endblock %}
+
+{% block body %}
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Pseudo</th>
+                <th>Email</th>
+                <th>Roles</th>
+                <th></th>
+                <th>Password</th> 
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.pseudo }}</td>
+                <td>{{user.player ? user.player.email : "" }}</td>
+                {# quand tous les champs email ne sont pas remplis en bdd, utiliser une ternaire pour verifier l'existence de la variable #}
+                <td>
+                    {% for role in user.roles %}
+                        {% if role == 'ROLE_ADMIN'%}
+                            Administrateur
+                      
+                       {% elseif role == 'ROLE_PLAYER'%}
+                           Joueur
+           
+                       {% elseif role == 'ROLE_USER'%}
+                           Utilisateur
+           
+                       {% elseif role == 'ROLE_REFEREE'%}
+                           Arbitre
+           
+                       {% endif %}
+           
+                       {{not loop.last ? ',' : ''}}
+                           {# {% if not loop.last %}
+                               ,
+                           {% endif %} #}
+                           
+                       {% endfor %}
+                </td>
+                {# Exo 1: afficher les roles en les remplaçant par administrateur pr ROLE_ADMIN, joueur pour ROLE_PLAYER etc. 
+                EXO 2: EXO DIFFICILE : lors de l'inscription, créer un nouveau User et un nouveau Player qui seront relié (dans la BDD le champ user.player_id vaudra player.id)#}
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>********</td>
+                <td>
+                    <a href="{{ path('app_admin_user_show', {'id': user.id}) }}"><i class="fa fa-user"></i></a>
+                    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}"><i class="fa fa-edit"></i></a>
+                </td>
+    
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun utilisateur n'est enregistré.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_user_new') }}" class="btn btn-primary">Ajouter un utilisateur</a>
+{% endblock %}
